@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { useEffect } from "react";
 import ScrollVideo from "./scrollVideo";
 import { useRef } from "react";
@@ -23,12 +24,14 @@ export default function Home() {
     blink(blinkVidRef.current);
   }, []);
 
-  return <div id="container">
-    <video id="v0" muted ref={blinkVidRef}>
-      <source src="/blink.webm" type="video/webm" />
-      Your browser does not support the video element.
-    </video>
-    <div id="box" className="z-0"></div>
-    {/* <ScrollVideo/> */}
+  return <div>
+    <div className="Section">
+      <div className="Text text-2xl">Welcome</div>
+      <video id="v0" muted ref={blinkVidRef}>
+        <source src="/blink.webm" type="video/webm" />
+        Your browser does not support the video element.
+      </video>
+      <div id="box" className="z-0"></div>
+    </div>
   </div>
 }
