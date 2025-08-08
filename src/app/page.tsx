@@ -17,25 +17,11 @@ async function blink(blinkVid: any) {
   }
 }
 
-function getOffsetTop (elem: HTMLElement) {
-	var distance = 0;
-
-	// loop up the DOM, adding each element's offset relative to its parent
-	if (elem.offsetParent) {
-		while (elem) {
-			distance += elem.offsetTop;
-      if (!elem.offsetParent) break;
-			elem = elem.offsetParent as HTMLElement;
-		} 
-	}
-
-	return distance < 0 ? 0 : distance;
-};
-
 const navPages = [
   {id: "welcome", label: "Welcome"},
   {id: "about", label: "About Me"},
-  {id: "experience", label: "Experience"}
+  {id: "experience", label: "Experience"},
+  {id: "projects", label: "Projects"}
 ];
 
 const barHeight = navPages.length * 2;
@@ -46,7 +32,6 @@ export default function Home() {
   const [doc, setDoc] = useState<Document | null>(null);
   const [scrollY, setScrollY] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-
   
   useEffect(() => {
 
@@ -68,26 +53,51 @@ export default function Home() {
     return () => scrollContainer.removeEventListener("scroll", handleScroll);
   }, []);
 
+  function getOffsetTop (id: string) {
+    if (!doc) return 0;
+    let elem = doc.getElementById(id);
+    if (!elem) return 0;
+    
+    var distance = 0;
+
+    // loop up the DOM, adding each element's offset relative to its parent
+    if (elem.offsetParent) {
+      while (elem) {
+        distance += elem.offsetTop;
+        if (!elem.offsetParent) break;
+        elem = elem.offsetParent as HTMLElement;
+      } 
+    }
+
+    return distance < 0 ? 0 : distance;
+  };
+
   const isActiveNav = (id: string) => {
     if (!doc) return;
     const elem = doc.getElementById(id);
 
     if (!elem || !elem.getBoundingClientRect()) return;
-    if (scrollY === getOffsetTop(elem)) {
+    if (scrollY === getOffsetTop(id)) {
       return true;
     }
     return false;
   }
 
+  const ballHeight = () => {
+    return scrollY / getOffsetTop(navPages[navPages.length - 1].id) * (barHeight - 1.5);
+  }
+
   return <div className="Container" ref={scrollRef}>
     <div className="Nav">
-      <div className="ml-2 bg-white relative">
+      <div className="ml-2 relative">
         <svg width={10} height={barHeight + "rem"} className="Bar">
-          <rect width={4} height={barHeight + "rem"} x={3} fill="#ECF1DE"></rect>
+          <rect width={4} height={barHeight + "rem"} x={3} rx={2} ry={2} fill="#ECF1DE"></rect>
         </svg>
-        <svg width={10} height={20} className="Circle" style={{top: (scrollY / barHeight)}}>
-          <rect width={10} height={20} fill="rgb(58, 59, 55)"></rect>
-          <circle r={5} cx={5} cy={10} fill="#ECF1DE" ></circle>
+        <svg width={10} height={"1.5rem"} opacity={50} className="Circle" style={
+          {top: ballHeight() + "rem"}
+        }>
+          <rect width={10} height={"1.5rem"} fill="rgb(58, 59, 55)"></rect>
+          <circle r={5} cx={5} cy={"0.75rem"} fill="#ECF1DE" ></circle>
         </svg>
       </div>
       <div className="flex flex-col justify-center items-start">
@@ -126,6 +136,14 @@ export default function Home() {
         <div className="Title">Experience</div>
         <p className="text-2xl">
           Solarcar, HCP, WOOF3D
+        </p>
+      </div>
+    </div>
+    <div className="Section justify-around" id="projects">
+      <div className="flex flex-col justify-center items-start w-1/2">
+        <div className="Title">Projects</div>
+        <p className="text-2xl">
+          blah blah blah
         </p>
       </div>
     </div>
