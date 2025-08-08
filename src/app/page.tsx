@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ScrollVideo from "./scrollVideo";
 import { useRef } from "react";
+import { get } from "http";
 
 function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -16,26 +17,88 @@ async function blink(blinkVid: any) {
   }
 }
 
+function getOffsetTop (elem: HTMLElement) {
+	var distance = 0;
+
+	// loop up the DOM, adding each element's offset relative to its parent
+	if (elem.offsetParent) {
+		while (elem) {
+			distance += elem.offsetTop;
+      if (!elem.offsetParent) break;
+			elem = elem.offsetParent as HTMLElement;
+		} 
+	}
+
+	return distance < 0 ? 0 : distance;
+};
+
 const navPages = [
   {id: "welcome", label: "Welcome"},
   {id: "about", label: "About Me"},
   {id: "experience", label: "Experience"}
 ];
 
+const barHeight = navPages.length * 2;
+
 export default function Home() {
   const blinkVidRef = useRef(null);
+  const [render, setRender] = useState(false);
+  const [doc, setDoc] = useState<Document | null>(null);
+  const [scrollY, setScrollY] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   
   useEffect(() => {
+
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
     blink(blinkVidRef.current);
+    setDoc(document);
+
+    const handleScroll = () => {
+      setScrollY(scrollContainer.scrollTop);
+      navPages.forEach(page => {
+        isActiveNav(page.id);
+      });
+    }
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return <div className="Container">
+  const isActiveNav = (id: string) => {
+    if (!doc) return;
+    const elem = doc.getElementById(id);
+
+    if (!elem || !elem.getBoundingClientRect()) return;
+    if (scrollY === getOffsetTop(elem)) {
+      return true;
+    }
+    return false;
+  }
+
+  return <div className="Container" ref={scrollRef}>
     <div className="Nav">
-      {navPages.map(page => {
-        return <button onClick={() => {
-            document.getElementById(page.id)?.scrollIntoView({ behavior: 'smooth' });
-          }} className="NavItem">{page.label}</button>
-      })}
+      <div className="ml-2 bg-white relative">
+        <svg width={10} height={barHeight + "rem"} className="Bar">
+          <rect width={4} height={barHeight + "rem"} x={3} fill="#ECF1DE"></rect>
+        </svg>
+        <svg width={10} height={20} className="Circle" style={{top: (scrollY / barHeight)}}>
+          <rect width={10} height={20} fill="rgb(58, 59, 55)"></rect>
+          <circle r={5} cx={5} cy={10} fill="#ECF1DE" ></circle>
+        </svg>
+      </div>
+      <div className="flex flex-col justify-center items-start">
+        {navPages.map((page, index) => {
+          return <button onClick={() => {
+              document.getElementById(page.id)?.scrollIntoView({ behavior: 'smooth' });
+            }} className="NavItem" key={index} style={isActiveNav(page.id) ? {fontWeight: "900", color: "rgb(236, 241, 222)", textIndent: "0.5rem"} : {}}>
+              {page.label}
+            </button>
+        })}
+      </div>
     </div>
     <div className="Section justify-around" id="welcome">
       <div className="Title">Welcome</div>
@@ -62,10 +125,7 @@ export default function Home() {
       <div className="flex flex-col justify-center items-start w-1/2">
         <div className="Title">Experience</div>
         <p className="text-2xl">
-          My name is Vashon Mavrinac. I am a software developer currently
-          studying Computer Science at the University of Washington. 
-          Some of my hobbies include building LEGO (shocker), longboarding,
-          and reading.
+          Solarcar, HCP, WOOF3D
         </p>
       </div>
     </div>
