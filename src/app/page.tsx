@@ -5,18 +5,18 @@ import { useRef } from "react";
 import Image from "next/image";
 
 // Waits for the given number of milliseconds.
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms: number) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 // Restarts and plays a video including a blink animation at random intervals
-async function blink(blinkVid: any) {
-  while (window.scrollY === 0) {
-    blinkVid.currentTime = 0;
-    await sleep((Math.random() * 3000) + 2000);
-    blinkVid.play();
-  }
-}
+// async function blink(blinkVid: any) {
+//   while (window.scrollY === 0) {
+//     blinkVid.currentTime = 0;
+//     await sleep((Math.random() * 3000) + 2000);
+//     blinkVid.play();
+//   }
+// }
 
 // The pages to show in the nav bar.
 const navPages = [
@@ -44,7 +44,7 @@ export default function Home() {
 
     doc.current = document;
 
-    blink(blinkVidRef.current);
+    // blink(blinkVidRef.current);
 
     const handleScroll = async () => {
       setScrollY(scrollContainer.scrollTop);
@@ -156,13 +156,13 @@ export default function Home() {
       <div className="Title">Vashon Mavrinac</div>
       <div>
         <p>Software Maker</p>
-        <div className="Graphic">
+        {/* <div className="Graphic">
           <video className="v0" muted ref={blinkVidRef}>
             <source src="/blink.webm" type="video/webm" />
             Your browser does not support this video element.
           </video>
           <div className="Shadow"></div>
-        </div>
+        </div> */}
       </div>
     </div>
     <div className="Section justify-around" id="about">
