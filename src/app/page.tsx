@@ -29,6 +29,40 @@ const navPages = [
   {id: "resume", label: "Resume"},
 ];
 
+const languages = [
+  "TypeScript/JavaScript",
+  "Java",
+  "Python",
+  "C",
+  "C++",
+  "C#",
+  "HTML",
+  "CSS",
+  "SQL",
+  "Bash",
+  "x86-64 Assembly",
+]
+
+const frameworks = [
+  "React.js",
+  "Next.js",
+  "Node.js",
+  "Express.js",
+  "REST APIs",
+  "NoSQL",
+  "Unity",
+  "Tailwind CSS",
+]
+
+const tools = [
+  "Git",
+  "SQLite",
+  "PostgreSQL",
+  "Google Firebase",
+  "Unity",
+  "Linux",
+]
+
 export default function Home() {
   const blinkVidRef = useRef(null);
   const doc = useRef<Document>(null);
@@ -125,7 +159,7 @@ export default function Home() {
     <div className="Nav">
       <div className="flex flex-col justify-center items-center ml-4">
         <Image className="ArrowButton mb-2" src="/up-arrow.svg" alt="up arrow" width={15} height={15}
-          style={isActiveNav(navPages[0].id) ? {visibility: "hidden"} : {}}
+          style={isActiveNav(navPages[0].id) ? {opacity: 0} : {}}
           onClick={() => prevNav()}/>
         <div className="relative">
           <svg width={10} height={barHeight + "rem"} className="Bar">
@@ -140,13 +174,12 @@ export default function Home() {
           </svg>
         </div>
         <Image className="ArrowButton rotate-180 mt-2" src="/up-arrow.svg" alt="up arrow" width={15} height={15}
-          style={isActiveNav(navPages[navPages.length - 1].id) ? {visibility: "hidden"} : {}}
-          onClick={() => nextNav()}
-          />
+          style={isActiveNav(navPages[navPages.length - 1].id) ? {opacity: 0} : {}}
+          onClick={() => nextNav()}/>
       </div>
       <div className="flex flex-col justify-center items-start">
         {navPages.map((page, index) => {
-          return <button onClick={() => setNav(index)} className="NavItem" key={index} style={isActiveNav(page.id) ? {fontWeight: "900", color: "rgb(236, 241, 222)", textIndent: "0.5rem"} : {}}>
+          return <button onClick={() => setNav(index)} className="NavItem" key={index} style={isActiveNav(page.id) ? {fontWeight: "700", color: "rgb(236, 241, 222)", textIndent: "0.5rem"} : {}}>
               {page.label}
             </button>
         })}
@@ -171,7 +204,7 @@ export default function Home() {
         <p>
           Hi, I'm Vashon. I am a software developer
           studying Computer Science at the University of Washington. 
-          Some of my hobbies include building LEGO (shocker), longboarding,
+          Some of my hobbies include building LEGO, longboarding,
           and reading.
         </p>
       </div>
@@ -193,9 +226,32 @@ export default function Home() {
     <div className="Section justify-around" id="skills">
       <div className="flex flex-col justify-center items-start w-1/2">
         <div className="Title">Skills</div>
-        <p>
-          Languages, frameworks 
-        </p>
+        <div className="flex justify-between w-full gap-4 mt-4">
+          <div className="SkillSection">
+            <div>Languages</div>
+            <div className="Pool">
+              {languages.map((lang, index) => {
+                return <span className="PoolItem" key={index}>{lang}</span>
+              })}
+            </div>
+          </div>
+          <div className="SkillSection">
+            <div>Frameworks</div>
+            <div className="Pool">
+              {frameworks.map((lang, index) => {
+                return <span className="PoolItem" key={index}>{lang}</span>
+              })}
+            </div>
+          </div>
+          <div className="SkillSection">
+            <div>Tools</div>
+            <div className="Pool">
+              {tools.map((lang, index) => {
+                return <span className="PoolItem" key={index}>{lang}</span>
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div className="Section justify-around" id="socials">
