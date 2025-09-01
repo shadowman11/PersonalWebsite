@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ScrollVideo from "./scrollVideo";
 import { useRef } from "react";
-import { get } from "http";
 import Image from "next/image";
 
 // Waits for the given number of milliseconds.
@@ -25,7 +23,10 @@ const navPages = [
   {id: "welcome", label: "Welcome"},
   {id: "about", label: "About Me"},
   {id: "experience", label: "Experience"},
-  {id: "projects", label: "Projects"}
+  {id: "projects", label: "Projects"},
+  {id: "skills", label: "Skills"},
+  {id: "socials", label: "Socials"},
+  {id: "resume", label: "Resume"},
 ];
 
 export default function Home() {
@@ -34,7 +35,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const scrollYRef = useRef(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const barHeight = navPages.length * 2;
+  const barHeight = (navPages.length * 2.25) - 0.75;
   const [currentNav, setCurrentNav] = useState(0);
   
   useEffect(() => {
@@ -128,7 +129,8 @@ export default function Home() {
           onClick={() => prevNav()}/>
         <div className="relative">
           <svg width={10} height={barHeight + "rem"} className="Bar">
-            <rect width={4} height={barHeight + "rem"} x={3} rx={2} ry={2} fill="#ECF1DE"></rect>
+            <rect width={4} height={barHeight + "rem"} x={3} rx={2} ry={2} fill="rgb(58, 59, 55)"></rect>
+            <rect width={4} height={(barHeight - 1.5) + "rem"} x={3} y={"0.75rem"} rx={2} ry={2} fill="#ECF1DE"></rect>
           </svg>
           <svg width={10} height={"1.5rem"} opacity={50} className="Circle" style={
             {top: circleHeight() + "rem"}
@@ -150,40 +152,65 @@ export default function Home() {
         })}
       </div>
     </div>
-    <div className="Section justify-around" id="welcome">
-      <div className="Title">Welcome</div>
-      <div className="Graphic">
-        <video className="v0" muted ref={blinkVidRef}>
-          <source src="/blink.webm" type="video/webm" />
-          Your browser does not support the video element.
-        </video>
-        <div className="Shadow"></div>
+    <div className="Section" id="welcome">
+      <div className="Title">Vashon Mavrinac</div>
+      <div>
+        <p>Software Maker</p>
+        <div className="Graphic">
+          <video className="v0" muted ref={blinkVidRef}>
+            <source src="/blink.webm" type="video/webm" />
+            Your browser does not support this video element.
+          </video>
+          <div className="Shadow"></div>
+        </div>
       </div>
     </div>
     <div className="Section justify-around" id="about">
       <div className="flex flex-col justify-center items-start w-1/2">
         <div className="Title">About Me</div>
-        <p className="text-2xl">
-          My name is Vashon Mavrinac. I am a software developer currently
+        <p>
+          Hi, I'm Vashon. I am a software developer
           studying Computer Science at the University of Washington. 
           Some of my hobbies include building LEGO (shocker), longboarding,
           and reading.
         </p>
       </div>
     </div>
-    <div className="Section justify-around" id="experience">
-      <div className="flex flex-col justify-center items-start w-1/2">
+    <div className="Section" id="experience">
         <div className="Title">Experience</div>
-        <p className="text-2xl">
+        <p>
           Solarcar, HCP, WOOF3D
         </p>
-      </div>
     </div>
     <div className="Section justify-around" id="projects">
       <div className="flex flex-col justify-center items-start w-1/2">
         <div className="Title">Projects</div>
-        <p className="text-2xl">
+        <p>
           blah blah blah
+        </p>
+      </div>
+    </div>
+    <div className="Section justify-around" id="skills">
+      <div className="flex flex-col justify-center items-start w-1/2">
+        <div className="Title">Skills</div>
+        <p>
+          Languages, frameworks 
+        </p>
+      </div>
+    </div>
+    <div className="Section justify-around" id="socials">
+      <div className="flex flex-col justify-center items-start w-1/2">
+        <div className="Title">Socials</div>
+        <p>
+          LinkedIn, Github
+        </p>
+      </div>
+    </div>
+    <div className="Section justify-around" id="resume">
+      <div className="flex flex-col justify-center items-start w-1/2">
+        <div className="Title">Resume</div>
+        <p>
+          pulling a baddie
         </p>
       </div>
     </div>
