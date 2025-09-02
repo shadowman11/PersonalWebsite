@@ -224,14 +224,14 @@ export default function Home() {
       </div>
     </div>
     <div className="Section justify-around" id="skills">
-      <div className="flex flex-col justify-center items-start w-1/2">
+      <div className="flex flex-col justify-center items-start mr-16">
         <div className="Title">Skills</div>
         <div className="flex justify-between w-full gap-4 mt-4">
           <div className="SkillSection">
             <div>Languages</div>
             <div className="Pool">
               {languages.map((lang, index) => {
-                return <span className="PoolItem" key={index}>{lang}</span>
+                return <span className="PoolItem border-2 border-yellow-600" key={index}>{lang}</span>
               })}
             </div>
           </div>
@@ -239,7 +239,7 @@ export default function Home() {
             <div>Frameworks</div>
             <div className="Pool">
               {frameworks.map((lang, index) => {
-                return <span className="PoolItem" key={index}>{lang}</span>
+                return <span className="PoolItem border-2 border-yellow-300" key={index}>{lang}</span>
               })}
             </div>
           </div>
@@ -247,7 +247,7 @@ export default function Home() {
             <div>Tools</div>
             <div className="Pool">
               {tools.map((lang, index) => {
-                return <span className="PoolItem" key={index}>{lang}</span>
+                return <span className="PoolItem border-2 border-green-300" key={index}>{lang}</span>
               })}
             </div>
           </div>
@@ -255,19 +255,19 @@ export default function Home() {
       </div>
     </div>
     <div className="Section justify-around" id="socials">
-      <div className="flex flex-col justify-center items-start w-1/2">
+      <div className="flex flex-col justify-start items-start w-full h-full">
         <div className="Title">Socials</div>
-        <p>
-          LinkedIn, Github
-        </p>
+        <div className="flex flex-row justify-center items-center gap-4 w-full h-full mb-16 mr-16">
+          <a className="SocialButton LinkedIn" href="https://www.linkedin.com/in/vashonmavrinac" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a className="SocialButton GitHub" href="https://www.github.com/shadowman11" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
       </div>
     </div>
     <div className="Section justify-around" id="resume">
-      <div className="flex flex-col justify-center items-start w-1/2">
+      <div className="flex flex-col justify-center items-start w-full h-full mb-16 mr-32">
         <div className="Title">Resume</div>
-        <p>
-          pulling a baddie
-        </p>
+        {/* if this is included, change the embed to an iframe linked to a google drive pdf for easier updating */}
+        <embed src="/Resume-Vashon-Mavrinac.pdf" type="application/pdf" width="90%" height="100%" />
       </div>
     </div>
   </div>
